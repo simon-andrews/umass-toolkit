@@ -46,7 +46,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = 'UMass APIs'
+project = 'UMass Toolkit'
 copyright = '2018, Simon Andrews'
 author = 'Simon Andrews'
 
@@ -100,7 +100,7 @@ html_static_path = ['_static']
 # -- Options for HTMLHelp output ------------------------------------------
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'UMassAPIsdoc'
+htmlhelp_basename = 'UMassToolkitdoc'
 
 
 # -- Options for LaTeX output ---------------------------------------------
@@ -127,7 +127,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'UMassAPIs.tex', 'UMass APIs Documentation',
+    (master_doc, 'UMassToolkit.tex', 'UMass Toolkit Documentation',
      'Simon Andrews', 'manual'),
 ]
 
@@ -137,7 +137,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'umassapis', 'UMass APIs Documentation',
+    (master_doc, 'umasstoolkit', 'UMass Toolkit Documentation',
      [author], 1)
 ]
 
@@ -148,10 +148,7 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'UMassAPIs', 'UMass APIs Documentation',
-     author, 'UMassAPIs', 'One line description of project.',
+    (master_doc, 'UMassToolkit', 'UMass Toolkit Documentation',
+     author, 'UMassToolkit', 'One line description of project.',
      'Miscellaneous'),
 ]
-
-
-

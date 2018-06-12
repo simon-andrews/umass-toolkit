@@ -1,11 +1,14 @@
-UMass APIs
-==========
+UMass Toolkit
+=============
 
-This website maintains documentation for various APIs serving up data relating
-to the `University of Massachusetts Amherst <https://www.umass.edu/>`_. It also
-hosts documentation for umass-python, a Python 3 library that makes it easy to
-use these APIs in your Python projects, and that serves as a reference
-implementation of sorts to aid efforts to use these APIs in other languages.
+This is the documentation for UMass Toolkit, an unofficial API wrapper library
+for various APIs serving up data related to the
+`University of Massachusetts Amherst <https://www.umass.edu/>`_. It also hosts
+documentation for those APIs themselves, meant to aid their use in other
+languages.
+
+The UMass Toolkit is written in Python 3 and depends on
+`requests <http://docs.python-requests.org/en/master/>`_.
 
 .. toctree::
    :maxdepth: 2

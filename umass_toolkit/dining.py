@@ -74,5 +74,3 @@ def get_food_trucks():
             'latitude': float(trucks[truck_id]['lat']) if trucks[truck_id]['lat'] != '' else None,
         })
     return ret
-
-pprint(get_food_trucks())

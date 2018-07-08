@@ -1,5 +1,4 @@
 from bs4 import BeautifulSoup
-from pprint import pprint
 import datetime
 import requests
 
@@ -65,12 +64,23 @@ def get_menu(location):
 
 def get_food_trucks():
     trucks = requests.get('https://www.umassdining.com/umassapi/truck_location').json()
+    for key in trucks.keys():
+        trucks[key]['id'] = int(key)
+    trucks = [trucks[key] for key in trucks.keys()]
+
+    def truck_is_open(truck):
+        return truck['long'] != '' and truck['lat'] != ''
+
     ret = []
-    for truck_id in trucks.keys():
-        int_id = int(truck_id)
-        ret.append({
-            'id': int_id,
-            'longitude': float(trucks[truck_id]['long']) if trucks[truck_id]['long'] != '' else None,
-            'latitude': float(trucks[truck_id]['lat']) if trucks[truck_id]['lat'] != '' else None,
-        })
+    for truck in trucks:
+        truck_data = {
+            'id': truck['id']
+        }
+        if truck_is_open(truck):
+            truck_data['longitude'] = float(truck['long'])
+            truck_data['latitude'] = float(truck['lat'])
+            truck_data['is_open'] = True
+        else:
+            truck_data['is_open'] = False
+        ret.append(truck_data)
     return ret

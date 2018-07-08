@@ -26,7 +26,7 @@ Finding food trucks:
 ```python3
 from umass_toolkit.dining import get_food_trucks
 for truck in get_food_trucks():
-  if truck['longitude'] is not None and truck['latitude'] is not None:
+  if truck['is_open']:
     print('GMaps for truck #{id}: https://www.google.com/maps/?q={long},{lat}'.format(id=truck['id'], long=truck['longitude'], lat=truck['latitude']))
   else:
     print('Truck #%d is not open for business right now. Sorry! :(' % truck['id'])

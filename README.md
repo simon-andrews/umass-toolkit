@@ -15,10 +15,10 @@ Recipes
 Searching for people:
 ```python3
 from umass_toolkit import people_finder
-people = people_finder.search('kumble')
-for person in people['results']:
-  print(person)
-if people['overflow_flag']:
+results = people_finder.search('kumble')
+for person in results['people']:
+  print('{name} <{email}>'.format(name=person['name'], email=person['email']))
+if results['overflow_flag']:
   print('Heads up: there were more matching results than the server gave us.')
 ```
 

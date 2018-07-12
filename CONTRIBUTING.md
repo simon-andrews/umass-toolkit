@@ -4,7 +4,7 @@ Contribute to UMTK!
 General rules:
  * Don't be a jerk
  * Feel free to ask for help with anything
- * Read [this](https://stackoverflow.com/help/how-to-ask) for some tips on how-to-ask
+ * Read [this](https://stackoverflow.com/help/how-to-ask) for some tips on how
    to ask good questions.
  * Issues marked ["good first issue"](https://github.com/simon-andrews/umass-toolkit/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22) are for beginners only
 

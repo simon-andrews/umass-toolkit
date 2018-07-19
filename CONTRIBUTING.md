@@ -81,7 +81,7 @@ Start developing
 ----------------
 Python is a good language to start learning to program with. I've not used it
 personally, but I hear very good things about the
-[_Learn Python the Hard Way_](https://learncodethehardway.org/python/) book.
+[_Automate the Boring stuff with Python_](https://automatetheboringstuff.com/) book.
 
 Developing UMTK will also require familiarity with requests and BeautifulSoup.
  * [requests quickstart](http://docs.python-requests.org/en/master/user/quickstart/)

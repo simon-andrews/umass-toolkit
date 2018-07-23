@@ -23,8 +23,8 @@ def search(last_name):
             temp_dict["honors"] = False
         else:
             temp_dict["honors"] = True
-        temp_dict["name"] = str(temp_soup.find("td", class_="views-field views-field-title").get_text())
-        temp_dict["graduation_year"] = str(temp_soup.find("td", class_="views-field views-field-field-grad-year").get_text())
-        temp_dict["major"] = str(temp_soup.find("td", class_="views-field views-field-field-major").get_text())
+        temp_dict["name"] = str(temp_soup.find("td", class_="views-field views-field-title").get_text()).strip()
+        temp_dict["graduation_year"] = str(temp_soup.find("td", class_="views-field views-field-field-grad-year").get_text()).strip()
+        temp_dict["major"] = str(temp_soup.find("td", class_="views-field views-field-field-major").get_text()).strip()
         student_info.append(temp_dict)
     return student_info

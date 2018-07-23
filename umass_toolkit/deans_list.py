@@ -19,7 +19,6 @@ def search(last_name):
     for unit in student_list:
         temp_soup = BeautifulSoup(str(unit), 'html.parser')
         temp_dict = {}
-        print(str(temp_soup.find("td", class_="views-field views-field-field-honors").get_text()))
         if "(H)" not in str(temp_soup.find("td", class_="views-field views-field-field-honors").get_text()):
             temp_dict["honors"] = False
         else:

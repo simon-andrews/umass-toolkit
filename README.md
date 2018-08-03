@@ -31,3 +31,7 @@ for truck in get_food_trucks():
   else:
     print('Truck #%d is not open for business right now. Sorry! :(' % truck['id'])
 ```
+
+Similar projects
+----------------
+Know of a similar project at another institution? Link to it here!

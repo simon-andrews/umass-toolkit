@@ -35,3 +35,4 @@ for truck in get_food_trucks():
 Similar projects
 ----------------
 Know of a similar project at another institution? Link to it here!
+ * University of Pennsylvania: [PennSDK (Python)](https://github.com/pennlabs/penn-sdk-python)

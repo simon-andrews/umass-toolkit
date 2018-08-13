@@ -54,7 +54,7 @@ def _menu_html_to_dict(html_string):
                 elif attribute_name == 'calories' or attribute_name == 'calories-from-fat':
                     data = int(data)
                 elif attribute_name == 'clean-diet-str':
-                    diets = item.attrs[attribute].join('').split(', ')
+                    diets = data.split(', ')
                     ret[item_name]['diets'] = diets
                     continue
                 elif attribute_name in ['cholesterol', 'sodium']:

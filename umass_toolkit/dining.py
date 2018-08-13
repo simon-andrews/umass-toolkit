@@ -1,3 +1,5 @@
+# Abandon all hope, ye who enter here.
+
 from bs4 import BeautifulSoup
 import datetime
 import requests
@@ -29,6 +31,12 @@ def location_id_to_name(location_id):
     raise KeyError('no locations found with ID %d' % location_id)
 
 def _menu_html_to_dict(html_string):
+    def parse_grams(s):
+        if s == '': #sometimes it's just a plain empty string?
+            return 0.0
+        return float(s[:-1])
+    def parse_milligrams(s):
+        return float(s[:-2])
     soup = BeautifulSoup(html_string, 'html.parser')
     items = soup.find_all('a', href='#inline')
     ret = {}
@@ -49,12 +57,22 @@ def _menu_html_to_dict(html_string):
                     diets = item.attrs[attribute].join('').split(', ')
                     ret[item_name]['diets'] = diets
                     continue
-                # TODO: parse the ingredient list
-                ret[item_name][attribute[5:]] = data
+                elif attribute_name in ['cholesterol', 'sodium']:
+                    data = parse_milligrams(data)
+                    attribute_name += '-mg'
+                elif attribute_name in ['dietary-fiber', 'protein', 'sat-fat', 'sugars', 'total-carb', 'total-fat', 'trans-fat']:
+                    data = parse_grams(data)
+                    attribute_name += '-g'
+                ret[item_name][attribute_name] = data
     return ret
 
 def get_menu(location):
-    r = requests.get('https://umassdining.com/foodpro-menu-ajax?tid=' + str(location)).json()
+    # If there is no menu available (for example, if the location is closed), then UMass Dining will simply return a blank page.
+    # Status code is 200 no matter what...
+    try:
+        r = requests.get('https://umassdining.com/foodpro-menu-ajax?tid=' + str(location)).json()
+    except json.decoder.JSONDecodeError:
+        return []
     ret = {}
     for meal in r.keys():
         ret[meal] = {}

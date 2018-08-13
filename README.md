@@ -17,7 +17,7 @@ Searching for people:
 from umass_toolkit import people_finder
 results = people_finder.search('kumble')
 for person in results['people']:
-  print('{name} <{email}>'.format(name=person['name'], email=person['email']))
+  print('{name} <{email}>'.format_map(person))
 if results['overflow_flag']:
   print('Heads up: there were more matching results than the server gave us.')
 ```
@@ -27,7 +27,7 @@ Finding food trucks:
 from umass_toolkit.dining import get_food_trucks
 for truck in get_food_trucks():
   if truck['is_open']:
-    print('GMaps for truck #{id}: https://www.google.com/maps/?q={long},{lat}'.format(id=truck['id'], long=truck['longitude'], lat=truck['latitude']))
+    print('GMaps for truck #{id}: https://www.google.com/maps/?q={longitude},{latitude}'.format_map(truck))
   else:
     print('Truck #%d is not open for business right now. Sorry! :(' % truck['id'])
 ```

@@ -32,6 +32,15 @@ for truck in get_food_trucks():
     print('Truck #%d is not open for business right now. Sorry! :(' % truck['id'])
 ```
 
+Finding all soups at Worcester with soy in them:
+```python3
+worcester_lunch_menu = get_menu(4)['lunch'] # 4 is Worcester's UMass dining location ID number
+soups = worcester_lunch_menu['Soups']
+for soup_name in soups:
+  if 'Soy' in soups[soup_name]['allergens']:
+    print(soup_name)
+```
+
 Similar projects
 ----------------
 Know of a similar project at another institution? Link to it here!

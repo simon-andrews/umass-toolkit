@@ -1,5 +1,5 @@
-UMass Toolkit
-=============
+UMass Toolkit [![Discord](https://img.shields.io/discord/469301310072684546.svg)](https://discord.gg/7Szhww5)
+=============================================================================================================
 Tools for working with various APIs serving up data related to the University of Massachusetts Amherst.
 
 Installation
@@ -40,6 +40,12 @@ for soup_name in soups:
   if 'Soy' in soups[soup_name]['allergens']:
     print(soup_name)
 ```
+
+Contributing
+------------
+We'd love to have you contribute some code to this project! Patches from beginning programmers are welcome! We'll help polish up your code and everything.
+
+Check out [CONTRIBUTING.md](https://github.com/simon-andrews/umass-toolkit/blob/master/CONTRIBUTING.md) to get up to speed. It has information on all sorts of stuff, like installing Python and submitting your code changes with GitHub.
 
 Similar projects
 ----------------

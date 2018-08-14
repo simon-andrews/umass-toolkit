@@ -18,7 +18,6 @@ def parse_list(ingredients):
                 else:
                     ingredient += ', '
                 i += 1
-            ingredient_list.append(ingredient)
         else:
             ingredient = naive_split[i]
         ingredient.strip()

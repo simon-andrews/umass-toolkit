@@ -7,7 +7,7 @@ import requests
 import dining_utils
 import pint
 
-ureg = pint.UnitRegistry()
+_ureg = pint.UnitRegistry()
 
 def get_locations():
     locations = requests.get('https://www.umassdining.com/uapp/get_infov2').json()
@@ -62,7 +62,7 @@ def _menu_html_to_dict(html_string):
                                         'total-carb', 'total-fat', 'trans-fat']:
                     if data == '':
                         continue
-                    data = ureg.Quantity(data)
+                    data = _ureg.Quantity(data)
                 ret[item_name][attribute_name] = data
     return ret
 

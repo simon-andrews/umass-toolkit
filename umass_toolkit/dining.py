@@ -2,7 +2,9 @@
 
 from bs4 import BeautifulSoup
 import datetime
+import json
 import requests
+import dining_utils
 
 def get_locations():
     locations = requests.get('https://www.umassdining.com/uapp/get_infov2').json()
@@ -36,6 +38,8 @@ def _menu_html_to_dict(html_string):
             return 0.0
         return float(s[:-1])
     def parse_milligrams(s):
+        if s == '':
+            return 0.0
         return float(s[:-2])
     soup = BeautifulSoup(html_string, 'html.parser')
     items = soup.find_all('a', href='#inline')
@@ -49,14 +53,16 @@ def _menu_html_to_dict(html_string):
                     continue
                 attribute_name = attribute[5:]
                 data = item.attrs[attribute]
-                if attribute_name == 'allergens':
-                    data = [x.strip() for x in data.split(', ')]
-                elif attribute_name == 'calories' or attribute_name == 'calories-from-fat':
+                if attribute_name == 'calories' or attribute_name == 'calories-from-fat':
+                    if data == '':
+                        continue
                     data = int(data)
                 elif attribute_name == 'clean-diet-str':
                     diets = data.split(', ')
                     ret[item_name]['diets'] = diets
                     continue
+                elif attribute_name in ['allergens', 'ingredient-list']:
+                    data = dining_utils.parse_list(data)
                 elif attribute_name in ['cholesterol', 'sodium']:
                     data = parse_milligrams(data)
                     attribute_name += '-mg'

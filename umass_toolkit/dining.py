@@ -5,6 +5,7 @@ import datetime
 import json
 import requests
 import dining_utils
+import urllib.parse
 
 def get_locations():
     locations = requests.get('https://www.umassdining.com/uapp/get_infov2').json()
@@ -72,11 +73,14 @@ def _menu_html_to_dict(html_string):
                 ret[item_name][attribute_name] = data
     return ret
 
-def get_menu(location):
+def get_menu(location, date = datetime.date.today()):
     # If there is no menu available (for example, if the location is closed), then UMass Dining will simply return a blank page.
     # Status code is 200 no matter what...
     try:
-        r = requests.get('https://umassdining.com/foodpro-menu-ajax?tid=' + str(location)).json()
+        query_params = {'tid': location,
+                        'date': date.strftime('%m/%d/%Y')}
+        request_url = 'https://umassdining.com/foodpro-menu-ajax?' + urllib.parse.urlencode(query_params)
+        r = requests.get(request_url).json()
     except json.decoder.JSONDecodeError:
         return []
     ret = {}

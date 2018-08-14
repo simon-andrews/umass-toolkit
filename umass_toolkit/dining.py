@@ -5,6 +5,9 @@ import datetime
 import json
 import requests
 import dining_utils
+import pint
+
+ureg = pint.UnitRegistry()
 
 def get_locations():
     locations = requests.get('https://www.umassdining.com/uapp/get_infov2').json()
@@ -33,14 +36,6 @@ def location_id_to_name(location_id):
     raise KeyError('no locations found with ID %d' % location_id)
 
 def _menu_html_to_dict(html_string):
-    def parse_grams(s):
-        if s == '': #sometimes it's just a plain empty string?
-            return 0.0
-        return float(s[:-1])
-    def parse_milligrams(s):
-        if s == '':
-            return 0.0
-        return float(s[:-2])
     soup = BeautifulSoup(html_string, 'html.parser')
     items = soup.find_all('a', href='#inline')
     ret = {}
@@ -63,12 +58,11 @@ def _menu_html_to_dict(html_string):
                     continue
                 elif attribute_name in ['allergens', 'ingredient-list']:
                     data = dining_utils.parse_list(data)
-                elif attribute_name in ['cholesterol', 'sodium']:
-                    data = parse_milligrams(data)
-                    attribute_name += '-mg'
-                elif attribute_name in ['dietary-fiber', 'protein', 'sat-fat', 'sugars', 'total-carb', 'total-fat', 'trans-fat']:
-                    data = parse_grams(data)
-                    attribute_name += '-g'
+                elif attribute_name in ['cholesterol', 'sodium', 'dietary-fiber', 'protein', 'sat-fat', 'sugars',
+                                        'total-carb', 'total-fat', 'trans-fat']:
+                    if data == '':
+                        continue
+                    data = ureg.Quantity(data)
                 ret[item_name][attribute_name] = data
     return ret
 

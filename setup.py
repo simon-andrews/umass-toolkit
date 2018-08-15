@@ -13,7 +13,7 @@ setuptools.setup(
     long_description_content_type="text/markdown",
     url="https://github.com/simon-andrews/umass-toolkit",
     packages=setuptools.find_packages(),
-    install_requires=['requests', 'beautifulsoup4'],
+    install_requires=['requests', 'beautifulsoup4', 'pint'],
     classifiers=(
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',

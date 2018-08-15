@@ -50,4 +50,6 @@ Check out [CONTRIBUTING.md](https://github.com/simon-andrews/umass-toolkit/blob/
 Similar projects
 ----------------
 Know of a similar project at another institution? Link to it here!
- * University of Pennsylvania: [PennSDK (Python)](https://github.com/pennlabs/penn-sdk-python)
+ * Boston University: [BU API Registry](https://webapi.bu.edu/)
+ * Massachusetts Institute of Technology: [MIT Developer Connection](https://ist.mit.edu/apis)
+ * University of Pennsylvania: [PennSDK](https://github.com/pennlabs/penn-sdk-python)

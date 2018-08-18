@@ -1,15 +1,11 @@
 # Abandon all hope, ye who enter here.
 
-from bs4 import BeautifulSoup
 import datetime
 import json
-import pint
 import requests
 import urllib.parse
-
 import dining_utils
 
-_ureg = pint.UnitRegistry()
 
 def get_locations():
     locations = requests.get('https://www.umassdining.com/uapp/get_infov2').json()
@@ -37,37 +33,6 @@ def location_id_to_name(location_id):
             return location['name']
     raise KeyError('no locations found with ID %d' % location_id)
 
-def _menu_html_to_dict(html_string):
-    soup = BeautifulSoup(html_string, 'html.parser')
-    items = soup.find_all('a', href='#inline')
-    ret = {}
-    for item in items:
-        item_name = item.string
-        ret[item_name] = {}
-        for attribute in item.attrs.keys():
-            if attribute.startswith('data-'):
-                if attribute.endswith('dv') or attribute in ['data-dish-name', 'data-recipe-webcode']:
-                    continue
-                attribute_name = attribute[5:]
-                data = item.attrs[attribute]
-                if attribute_name == 'calories' or attribute_name == 'calories-from-fat':
-                    if data == '':
-                        continue
-                    data = int(data)
-                elif attribute_name == 'clean-diet-str':
-                    diets = data.split(', ')
-                    ret[item_name]['diets'] = diets
-                    continue
-                elif attribute_name in ['allergens', 'ingredient-list']:
-                    data = dining_utils.parse_list(data)
-                elif attribute_name in ['cholesterol', 'sodium', 'dietary-fiber', 'protein', 'sat-fat', 'sugars',
-                                        'total-carb', 'total-fat', 'trans-fat']:
-                    if data == '':
-                        continue
-                    data = _ureg.Quantity(data)
-                ret[item_name][attribute_name] = data
-    return ret
-
 def get_menu(location, date = datetime.date.today()):
     # If there is no menu available (for example, if the location is closed), then UMass Dining will simply return a blank page.
     # Status code is 200 no matter what...
@@ -78,11 +43,10 @@ def get_menu(location, date = datetime.date.today()):
         r = requests.get(request_url).json()
     except json.decoder.JSONDecodeError:
         return []
-    ret = {}
+    ret = []
     for meal in r.keys():
-        ret[meal] = {}
-        for menu in r[meal].keys():
-            ret[meal][menu] = _menu_html_to_dict(r[meal][menu])
+        for category in r[meal].keys():
+            ret.extend(dining_utils.category_html_to_dict(r[meal][category], meal, category))
     return ret
 
 def get_food_trucks():

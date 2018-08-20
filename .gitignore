@@ -1,4 +1,5 @@
-.idea/
+.*
+!/.gitignore
 *.egg-info/
 build/
 dist/

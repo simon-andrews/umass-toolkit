@@ -1,4 +1,5 @@
-UMass Toolkit [![Discord](https://img.shields.io/discord/469301310072684546.svg)](https://discord.gg/7Szhww5)
+
+UMass Toolkit [![Build Status](https://travis-ci.org/simon-andrews/umass-toolkit.svg?branch=master)](https://travis-ci.org/simon-andrews/umass-toolkit) [![Discord](https://img.shields.io/discord/469301310072684546.svg)](https://discord.gg/7Szhww5)
 =============================================================================================================
 Tools for working with various APIs serving up data related to the University of Massachusetts Amherst.
 

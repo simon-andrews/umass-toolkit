@@ -4,7 +4,7 @@ import datetime
 import json
 import requests
 import urllib.parse
-import dining_utils
+from . import dining_utils
 
 
 def get_locations():

@@ -1,4 +1,6 @@
-.idea/
+.*
+!/.gitignore
+!/.travis.yml
 *.egg-info/
 build/
 dist/

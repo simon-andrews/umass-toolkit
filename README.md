@@ -42,6 +42,14 @@ for soup_name in soups:
     print(soup_name)
 ```
 
+Finding out who's in charge of the UMass club powerlifting team
+```python3
+key = student_organizations.search("Powerlifting")[0]["WebsiteKey"]
+info = student_organizations.info(key)
+contact = info["primaryContact"]
+print("Run by {} {}".format(contact["firstName"], contact["lastName"]))
+```
+
 Contributing
 ------------
 We'd love to have you contribute some code to this project! Patches from beginning programmers are welcome! We'll help polish up your code and everything.

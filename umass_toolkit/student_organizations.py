@@ -5,6 +5,21 @@ import requests
 URI_BASE = "https://umass.campuslabs.com"
 API_BASE = "engage/api/discovery/"
 
+# Strip the stuff that doesn't make sense in a public API
+IGNORED = [
+    "@search.score",
+    "BranchId",
+    "CategoryIds",
+    "communityId",
+    "cssConfigurationId",
+    "InstitutionId",
+    "institutionId",
+    "showFacebookWall",
+    "showJoin",
+    "showTwitterFeed",
+    "wallId",
+]
+
 # The primary endpoint used by the webapp is 'engage/api/discovery/search/
 # organizations', which appears to be Microsoft's Azure Search Service REST API.
 # It's some sort of RPC controlled via GET parameters. Documentation available.
@@ -50,7 +65,12 @@ def _category_ids():
 
 def _additional_fields(organization_id):
     resp = _request("organization/{}/additionalFields".format(organization_id))
-    return resp["items"]
+    return resp.get("items", [])
+
+
+def _documents(organization_id):
+    resp = _request("organization/{}/document".format(organization_id))
+    return resp.get("items", [])
 
 
 def categories():
@@ -66,7 +86,17 @@ def info(websitekey):
     resp = _request("organization/bykey/{}".format(websitekey))
     organization_id = resp["id"]
     resp["additionalFields"] = _additional_fields(organization_id)
-    return resp
+    resp["documents"] = _documents(organization_id)
+
+    for document in resp["documents"]:
+        if "id" in document:
+            resource = "engage/organization/{}/documents/view/{}".format(
+                websitekey,
+                document["id"]
+            )
+            document["url"] = urljoin(URI_BASE, resource)
+
+    return { key: resp[key] for key in resp if key not in IGNORED }
 
 
 def search(keywords="", categories=[]):
@@ -87,7 +117,10 @@ def search(keywords="", categories=[]):
         "filter": filter_string,
         "query": keywords
     })
-    return resp.get("value", [])
+    return list(map(
+        lambda org: { key: org[key] for key in org if key not in IGNORED },
+        resp.get("value", [])
+    ))
 
 
 def all_organizations():

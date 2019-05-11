@@ -26,9 +26,9 @@ def events_today():
 	mysoup = BeautifulSoup(r.content, 'html.parser')
 
     #container for list of today's events
-	event_container = mysoup.find("div", class_="view-events")
+	event_container = mysoup.find("div", class_="view-content")
 	small_soup = BeautifulSoup(str(event_container), 'html.parser')
-	event_list = small_soup.find_all("div", class_="views-row")
+	event_list = small_soup.find_all("div", class_="event-details")
 
     #iterates through the event rows
 	event_info = list()
@@ -38,7 +38,7 @@ def events_today():
 		temp_dict["name"] = temp_soup.find("span", class_="field-content").find("a").get_text().strip()
 		temp_dict["description"] = temp_soup.find("div", class_="views-field-field-short-desc").find("div", class_="field-content").get_text().strip()
 		temp_dict["date_time"] = temp_soup.find("h3", class_="event-date").get_text().strip()
-		temp_dict["location"] = temp_soup.find("div", class_="event-location").find("h3").get_text().strip()
+		temp_dict["location"] = temp_soup.find("div", class_="event-location").get_text().strip()
 		event_info.append(temp_dict)
 	return event_info
 

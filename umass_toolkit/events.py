@@ -1,28 +1,22 @@
 import requests
 from bs4 import BeautifulSoup
 
-#All of this code about dates and months is to get the week of the year for the url in events_this_week
-class dated:
-	def __init__(self, year, month, day):
-		self.year = year
-		self.month = month
-		self.day = day
+def _find_week_url():
+	r = requests.get('https://umass.edu/events/')
+	mysoup = BeautifulSoup(r.content, 'html.parser')
+	url = mysoup.find("li", class_="body-nav-week").find("a").get("href")
+	#href is to subdomain url
+	return 'https://umass.edu{}'.format(url)
 
-def week_of_year(x):
-	if x.year%4 == 0:
-		return (sum_months(x.month) + x.day + 1)%7
-	else:
-		return (sum_months(x.month) + x.day)%7
-
-def sum_months(month):
-	lst = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
-	total = 0
-	for i in range(month-1):
-		total += lst[i]
-	return total
-
-def events_today():
-	r = requests.get("http://www.umass.edu/events")
+def _find_month_url():
+	r = requests.get('https://umass.edu/events/')
+	mysoup = BeautifulSoup(r.content, 'html.parser')
+	url = mysoup.find("li", class_="body-nav-month").find("a").get("href")
+	#href is to subdomain url
+	return 'https://umass.edu{}'.format(url)
+    
+def _events(url):
+	r = requests.get(url)
 	mysoup = BeautifulSoup(r.content, 'html.parser')
 
     #container for list of today's events
@@ -42,3 +36,14 @@ def events_today():
 		event_info.append(temp_dict)
 	return event_info
 
+def events_today():
+	url = 'https://umass.edu/events/'
+	return _events(url)
+
+def events_this_week():
+	url = _find_week_url()
+	return _events(url)
+
+def events_this_month():
+	url = _find_month_url()
+	return _events(url)
